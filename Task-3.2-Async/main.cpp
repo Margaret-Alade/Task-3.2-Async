@@ -25,11 +25,14 @@ int async_for_each(std::vector<int>::iterator begin, std::vector<int>::iterator 
         int result = sum_el(begin, end);
         return result;
     }
+    
     auto mid = begin;
     std::advance(mid, cur_distance/2);
+    
     auto r_res = std::async(async_for_each, begin, mid);
                                 
-    auto left_res = sum_el(mid, end);
+    auto left_res = async_for_each(mid, end);
+    
     return r_res.get() + left_res;
 }
 
